@@ -671,9 +671,17 @@ export class InstagramProvider
               )}`
             : ``;
 
+        // Geolocalização (place tag nativo): só feed/reels, não story. Recebe um
+        // FB Page-with-location id em settings.location_id. URL-encoded p/ não
+        // injetar query. Ausente = no-op (backward-compatible).
+        const location =
+          firstPost?.settings?.location_id && !isStory
+            ? `&location_id=${encodeURIComponent(firstPost.settings.location_id)}`
+            : ``;
+
         const { id: photoId } = await (
           await this.fetch(
-            `https://${type}/v20.0/${id}/media?${mediaType}${isCarousel}${collaborators}${trialParams}${audioConfiguration}&access_token=${accessToken}${caption}`,
+            `https://${type}/v20.0/${id}/media?${mediaType}${isCarousel}${collaborators}${trialParams}${audioConfiguration}${location}&access_token=${accessToken}${caption}`,
             {
               method: 'POST',
             }

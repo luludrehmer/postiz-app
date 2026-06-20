@@ -70,4 +70,10 @@ export class InstagramDto {
   @ValidateNested()
   @IsOptional()
   audio?: InstagramAudio;
+
+  // Place tag nativo (FB Page-with-location id). O whitelist do class-validator
+  // descartaria o campo se não estivesse declarado aqui — por isso precisa existir.
+  @IsOptional()
+  @IsString()
+  location_id?: string;
 }
