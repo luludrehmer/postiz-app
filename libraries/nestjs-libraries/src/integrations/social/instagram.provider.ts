@@ -671,11 +671,15 @@ export class InstagramProvider
               )}`
             : ``;
 
-        // Geolocalização (place tag nativo): só feed/reels, não story. Recebe um
-        // FB Page-with-location id em settings.location_id. URL-encoded p/ não
-        // injetar query. Ausente = no-op (backward-compatible).
+        // Geolocalização (place tag nativo): single REEL ou single feed post, não
+        // story e não carousel-child (o doc do Meta diz "Not supported on images or
+        // videos in carousels" + erro INVALID_LOCATION_ID se a Page não tiver local).
+        // Recebe um FB Page-with-location id em settings.location_id. URL-encoded.
+        // Ausente/multi-mídia = no-op (backward-compatible).
         const location =
-          firstPost?.settings?.location_id && !isStory
+          firstPost?.settings?.location_id &&
+          !isStory &&
+          (firstPost?.media?.length ?? 0) === 1
             ? `&location_id=${encodeURIComponent(firstPost.settings.location_id)}`
             : ``;
 

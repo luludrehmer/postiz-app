@@ -573,10 +573,9 @@ export class FacebookProvider extends SocialAbstract implements SocialProvider {
               file_url: firstPost?.media?.[0]?.path!,
               description: firstPost.message,
               published: true,
-              // Geolocalização (place tag nativo): Page id de localização.
-              ...(firstPost?.settings?.location_id
-                ? { place: firstPost.settings.location_id }
-                : {}),
+              // NB: /videos NÃO aceita `place` (place tag só em /feed e em
+              // /video_reels na call de finish). Aqui seria no-op → não enviamos.
+              // FB reel nativo = follow-up (migrar p/ /video_reels).
             }),
           },
           'upload mp4'
