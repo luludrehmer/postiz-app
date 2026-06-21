@@ -7,6 +7,12 @@ on:
     tags:
       - '*'
 
+# Necessário p/ o GITHUB_TOKEN publicar a imagem no GHCR do fork (default do fork
+# é read-only → "denied: not allowed to Create package" sem isto).
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   build-containers-common:
     runs-on: ubuntu-latest
