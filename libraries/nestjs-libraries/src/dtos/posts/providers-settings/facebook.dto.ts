@@ -1,4 +1,4 @@
-import { IsIn, IsOptional, ValidateIf, IsUrl } from 'class-validator';
+import { IsIn, IsOptional, ValidateIf, IsUrl, IsString } from 'class-validator';
 
 export class FacebookDto {
   @IsOptional()
@@ -9,4 +9,10 @@ export class FacebookDto {
   @IsIn(['post', 'story'])
   @IsOptional()
   post_type?: 'post' | 'story';
+
+  // Place tag nativo (Page id de localização). Declarado p/ não ser descartado
+  // pelo whitelist do class-validator.
+  @IsOptional()
+  @IsString()
+  location_id?: string;
 }

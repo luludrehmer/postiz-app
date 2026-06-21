@@ -573,6 +573,10 @@ export class FacebookProvider extends SocialAbstract implements SocialProvider {
               file_url: firstPost?.media?.[0]?.path!,
               description: firstPost.message,
               published: true,
+              // Geolocalização (place tag nativo): Page id de localização.
+              ...(firstPost?.settings?.location_id
+                ? { place: firstPost.settings.location_id }
+                : {}),
             }),
           },
           'upload mp4'
@@ -623,6 +627,9 @@ export class FacebookProvider extends SocialAbstract implements SocialProvider {
               ...(uploadPhotos?.length ? { attached_media: uploadPhotos } : {}),
               ...(firstPost?.settings?.url
                 ? { link: firstPost.settings.url }
+                : {}),
+              ...(firstPost?.settings?.location_id
+                ? { place: firstPost.settings.location_id }
                 : {}),
               message: firstPost.message,
               published: true,
